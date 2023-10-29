@@ -6,6 +6,35 @@ struct Node {
 	struct Node* next; //puntero al siguiente elemento de la lista
 };
 
+//Eliminar nodo por valor
+void deleteNode(int valor, struct Node **node){
+	struct Node* current = *node;
+	struct Node* prev = NULL;
+	//ELiminar primer elemento
+	if (current != NULL && current->data == valor){
+		*node = current->next;
+		free(current);
+		printf("Se ha eliminado el elemento %d\n", valor);
+		return;
+	}
+	
+	//Buscar el nodo
+	while (current != NULL && current -> data != valor){
+		prev = current;
+		current = current->next;
+	}
+
+	//Nodo encontrado o se llego al final de la lista
+	if (current == NULL){
+		printf("Nodo no encontrado\n");
+		return;
+	}
+	//ELiminar nodo
+	prev->next = current->next;
+	free(current);
+	printf("Se ha eliminado el elemento %d\n", valor);
+}
+
 //Imprimir lista
 void printList(struct Node* node){
 
@@ -48,6 +77,13 @@ int main() {
 	insertar(34, &head);
 	printList(head);
 	insertar(57, &head);
+	printList(head);
+	insertar(90, &head);
+	printList(head);
+	deleteNode(89, &head);
+	deleteNode(34, &head);
+	printList(head);
+	deleteNode(90, &head);
 	printList(head);
 	freeList(head);
 }
