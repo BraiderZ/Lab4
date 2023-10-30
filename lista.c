@@ -5,6 +5,23 @@ struct Node {
 	int data; //tipos de datos permitidos
 	struct Node* next; //puntero al siguiente elemento de la lista
 };
+//Buscar nodo por su valor
+void findList(int valor, struct Node *node){
+	 struct Node* current = node;
+
+ 	 //Buscar el nodo
+        while (current != NULL && current -> data != valor){
+                current = current->next;
+	}
+	//Nodo no encontrado
+        if (current == NULL){
+                printf("No existe el valor %d en la lista\n", valor);
+                return;
+        }
+        //Nodo existe
+        printf("Existe %d en la lista\n", valor);
+
+}
 
 //Eliminar nodo por valor
 void deleteNode(int valor, struct Node **node){
@@ -80,6 +97,8 @@ int main() {
 	printList(head);
 	insertar(90, &head);
 	printList(head);
+	findList(57, head);
+	findList(78, head);
 	deleteNode(89, &head);
 	deleteNode(34, &head);
 	printList(head);
