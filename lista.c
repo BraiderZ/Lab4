@@ -52,6 +52,22 @@ void deleteNode(int valor, struct Node **node){
 	printf("Se ha eliminado el elemento %d\n", valor);
 }
 
+// Imprimir nodo por su posicion
+
+void posicion(int posicion, struct Node* node){
+	int i = 0;
+	if (node != NULL){
+		for (i = 0; i < posicion; i ++){
+			if (node != NULL){
+				node = node->next;
+			}else{
+				printf("No existe valor en la posicion %d\n", posicion);
+				return;
+			}
+		}
+		printf("El valor en la posicion %d es: %d\n", posicion, node->data);
+	}
+}
 //Imprimir lista
 void printList(struct Node* node){
 
@@ -73,9 +89,34 @@ void freeList(struct Node* head) {
 	}
 
 }
+//Insertar nodo al final de la lista
+void insertarFinal(int data, struct Node** head) {
+        struct Node* nuevo = (struct Node*)malloc(sizeof(struct Node));
+        nuevo->data = data;
+	nuevo->next = NULL;
+        
+	if (*head == NULL){
+		*head = nuevo;
+	} else {
+		struct Node* current = *head;
+		while (current->next != NULL){
+		current = current->next;	
+		}
+		current->next = nuevo;
+	}
+        printf("Elemento %d agregado a la lista al final\n", data);
+}
+//Insertar nodo al principio de la lista (es el mismo que insertar)
+void insertarInicio(int data, struct Node** head) {
 
+        struct Node* nuevo = (struct Node*)malloc(sizeof(struct Node));
+        nuevo->data = data;
+	nuevo->next = (*head);
+        (*head) = nuevo;
+        printf("Elemento %d agregado a la lista al inicio\n", data);
+}
 
-//Insertar nodo al principio de la lista
+//Insertar a la lista
 void insertar(int data, struct Node** head) {
 
 	struct Node* nuevo = (struct Node*)malloc(sizeof(struct Node));
@@ -93,16 +134,18 @@ int main() {
 	printList(head);
 	insertar(34, &head);
 	printList(head);
-	insertar(57, &head);
-	printList(head);
 	insertar(90, &head);
 	printList(head);
-	findList(57, head);
+	insertarInicio(11, &head);
+	printList(head);
+	insertarFinal(12, &head);
+	printList(head);
+	findList(12, head);
 	findList(78, head);
+	posicion(0, head);
+	posicion(80, head);
 	deleteNode(89, &head);
 	deleteNode(34, &head);
-	printList(head);
-	deleteNode(90, &head);
 	printList(head);
 	freeList(head);
 }
